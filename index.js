@@ -1,0 +1,1 @@
+model = await tf.loadLayersModel('model/model.json')
