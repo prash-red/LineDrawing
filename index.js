@@ -1,4 +1,28 @@
-model = await tf.loadLayersModel("model/model.json");
+// Load your TensorFlow.js model here
+const model = await tf.loadLayersModel("model/model.json");
+
+// Function to run when the user draws and predicts
+async function predictDrawing() {
+  // Preprocess the drawn image
+  const preprocessedImage = preprocess(imgData);
+
+  // Make a prediction using the loaded model
+  const prediction = await model.predict(preprocessedImage).data();
+
+  // Process the prediction to determine what the user drew
+  // You will need to define your own logic here based on your model's output
+
+  // For example, if you have a model that predicts digits (0-9):
+  const maxPredictionIndex = prediction.indexOf(Math.max(...prediction));
+  const predictedDigit = maxPredictionIndex.toString();
+
+  // You can then display the predicted result or take further actions based on it
+  console.log("Predicted Digit: " + predictedDigit);
+}
+
+// Add an event listener to run predictDrawing() when the user interacts with the canvas
+canvas.on("mouse:up", predictDrawing);
+
 
 //the minimum boudning box around the current drawing
 const mbb = getMinBox();
